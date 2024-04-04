@@ -20,14 +20,14 @@ async function main() {
     },
   })
 
-  for (let index = 0; index < 5; index++) {
+  for (let index = 0; index < 228; index++) {
     await prisma.attendee.create({
       data: {
-        id: 1000 * index,
+        id: 1000 + index,
         name: faker.person.fullName(),
         email: faker.internet.email().toLocaleLowerCase(),
         eventId,
-        createdAt: faker.date.recent({ days: 5 }),
+        createdAt: faker.date.recent({ days: 30 }),
         checkIn: faker.helpers.arrayElement<
           Prisma.CheckInUncheckedCreateNestedOneWithoutAttendeeInput | undefined
         >([

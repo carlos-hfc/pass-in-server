@@ -29,6 +29,7 @@ export async function getEventAttendees(app: FastifyInstance) {
                 checkedInAt: z.date().nullable(),
               }),
             ),
+            total: z.number(),
           }),
         },
       },
@@ -37,29 +38,35 @@ export async function getEventAttendees(app: FastifyInstance) {
       const { eventId } = request.params
       const { pageIndex, query } = request.query
 
-      const attendees = await prisma.attendee.findMany({
-        where: query
-          ? {
-              eventId,
-              name: { contains: query },
-            }
-          : {
-              eventId,
-            },
-        take: 10,
-        skip: pageIndex * 10,
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          createdAt: true,
-          checkIn: {
-            select: {
-              createdAt: true,
+      const where = {
+        eventId,
+        ...(query && { name: { contains: query } }),
+      }
+
+      const [attendees, total] = await Promise.all([
+        prisma.attendee.findMany({
+          where,
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 10,
+          skip: pageIndex * 10,
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            createdAt: true,
+            checkIn: {
+              select: {
+                createdAt: true,
+              },
             },
           },
-        },
-      })
+        }),
+        prisma.attendee.count({
+          where,
+        }),
+      ])
 
       return {
         attendees: attendees.map(attendee => ({
@@ -69,6 +76,7 @@ export async function getEventAttendees(app: FastifyInstance) {
           createdAt: attendee.createdAt,
           checkedInAt: attendee.checkIn?.createdAt ?? null,
         })),
+        total,
       }
     },
   )
