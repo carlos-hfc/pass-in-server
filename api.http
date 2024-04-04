@@ -2,7 +2,33 @@ POST http://localhost:3333/events
 Content-Type: application/json
 
 {
-  "title": "Unite summit",
-  "details": "Um evento para quem é apaixonado por programação",
-  "maximumAttendees": 100
+  "title": "NLW Unite",
+  "details": null,
+  "maximumAttendees": 1
 }
+
+###
+
+POST http://localhost:3333/events/41c71d1e-cd4d-47f9-8391-bc9d5e5141b1/attendees
+Content-Type: application/json
+
+{
+  "name": "Carlos Faustino",
+  "email": "carlos@email.com"
+}
+
+###
+
+GET http://localhost:3333/events/41c71d1e-cd4d-47f9-8391-bc9d5e5141b1
+
+###
+
+GET http://localhost:3333/attendees/10/badge
+
+###
+
+GET http://localhost:3333/attendees/10/check-in
+
+###
+
+GET http://localhost:3333/events/41c71d1e-cd4d-47f9-8391-bc9d5e5141b1/attendees
