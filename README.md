@@ -7,12 +7,6 @@
 
 <br/>
 
-<p align="center">
-  <img src="./public/logo.svg" width="250" /> 
-</p>
-
-<br/>
-
 # :bulb: Sobre
 
 O pass.in é uma aplicação de **gestão de participantes em eventos presenciais**.
@@ -51,7 +45,13 @@ cd pass-in-server
 npm install
 ```
 
-4. Rode a aplicação
+4. Crie um arquivo `.env.local` na raiz do projeto e adicione a URL do banco de dados e a URL base do backend:
+```env
+DATABASE_URL="file:./dev.db"
+BASE_URL="http://localhost:3333"
+```
+
+5. Rode a aplicação
 
 ```bash
 npm run dev
