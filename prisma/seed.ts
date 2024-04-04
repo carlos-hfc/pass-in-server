@@ -20,8 +20,6 @@ async function main() {
     },
   })
 
-  const attendeesToInsert: Prisma.AttendeeUncheckedCreateInput[] = []
-
   for (let index = 0; index < 5; index++) {
     await prisma.attendee.create({
       data: {
