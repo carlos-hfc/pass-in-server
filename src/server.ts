@@ -7,6 +7,7 @@ import {
   validatorCompiler,
 } from "fastify-type-provider-zod"
 
+import { errorHandler } from "./error-handler"
 import { checkIn } from "./routes/check-in"
 import { createEvent } from "./routes/create-event"
 import { getAttendeeBadge } from "./routes/get-attendee-badge"
@@ -35,6 +36,8 @@ app.register(fastifySwaggerUi, {
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.setErrorHandler(errorHandler)
 
 app.register(createEvent)
 app.register(registerForEvent)
